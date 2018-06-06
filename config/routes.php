@@ -1,5 +1,7 @@
 <?php
 
+use Brave\CoreConnector\AuthController;
+use Brave\CoreConnector\IndexController;
 use Brave\Sso\Basics\AuthenticationController;
 
 return function (\Psr\Container\ContainerInterface $container)
@@ -9,7 +11,11 @@ return function (\Psr\Container\ContainerInterface $container)
 
     // SSO via sso-basics package
     $app->get('/login', AuthenticationController::class . ':index');
-    $app->post('/auth', AuthenticationController::class . ':auth');
+    $app->get('/auth', AuthController::class . ':auth');
+    $app->get('/logout', AuthController::class . ':logout');
+
+    // app routes
+    $app->get('/', IndexController::class);
 
     return $app;
 };

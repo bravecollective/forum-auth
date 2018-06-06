@@ -1,14 +1,20 @@
 <?php
 
+use Brave\CoreConnector\ErrorHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+
 return [
     'settings' => require_once('config.php'),
 
-    \Slim\App::class => function (\Psr\Container\ContainerInterface $container)
+    \Slim\App::class => function (ContainerInterface $container)
     {
         return new Slim\App($container);
     },
 
-    \League\OAuth2\Client\Provider\GenericProvider::class => function (\Psr\Container\ContainerInterface $container)
+    \League\OAuth2\Client\Provider\GenericProvider::class => function (ContainerInterface $container)
     {
         $settings = $container->get('settings');
 
@@ -22,7 +28,7 @@ return [
         ]);
     },
 
-    \Brave\Sso\Basics\AuthenticationProvider::class => function (\Psr\Container\ContainerInterface $container)
+    \Brave\Sso\Basics\AuthenticationProvider::class => function (ContainerInterface $container)
     {
         $settings = $container->get('settings');
 
@@ -32,11 +38,24 @@ return [
         );
     },
 
-    \Brave\CoreConnector\SessionHandler::class => function (\Psr\Container\ContainerInterface $container) {
+    \Brave\CoreConnector\SessionHandler::class => function (ContainerInterface $container) {
         return new \Brave\CoreConnector\SessionHandler($container);
     },
 
-    \Brave\Sso\Basics\SessionHandlerInterface::class => function (\Psr\Container\ContainerInterface $container) {
+    \Brave\Sso\Basics\SessionHandlerInterface::class => function (ContainerInterface $container) {
         return $container->get(\Brave\CoreConnector\SessionHandler::class);
     },
+
+    LoggerInterface::class => function (ContainerInterface $container) {
+        $logger = new Logger('errors');
+        $logger->pushHandler(new StreamHandler(__DIR__.'/../logs/error.log', Logger::DEBUG));
+        return $logger;
+    },
+
+    'errorHandler' => function ($c) {
+        return new ErrorHandler(
+            $c->get('settings')['displayErrorDetails'],
+            $c->get(LoggerInterface::class)
+        );
+    }
 ];

@@ -26,7 +26,8 @@
         "bravecollective/web-ui": "*@dev",
         "vlucas/phpdotenv": "^2.4",
         "doctrine/dbal": "2.5",
-        "bryanjhv/slim-session": "^3.5"
+        "bryanjhv/slim-session": "^3.5",
+        "monolog/monolog": "^1.23"
     },
     "config": {
         "assets-dir": "web/assets"

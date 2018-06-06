@@ -1,4 +1,5 @@
-.env
-vendor
-web/assets
-config/config.php
+/.buildpath
+/.project
+/.settings
+/.vagrant
+/vendor
