@@ -69,6 +69,11 @@ class Core
             return $response->withRedirect('/?core-success=0');
         }
 
+        // check if there are any groups at all: no Core groups = no forum account
+        if (count($groupNames) === 0) {
+            return $response->withRedirect('/?core-success=0');
+        }
+
         // update or create local character
         $character = $this->updateCreateCharacter($auth);
 
