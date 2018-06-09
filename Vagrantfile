@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     config.ssh.password = 'vagrant'
 
     config.vm.provision "shell", inline: <<-SHELL
-    	PASSWD='vagrant'
+        PASSWD='vagrant'
 
         export DEBIAN_FRONTEND=noninteractive
         echo "LC_ALL=en_US.UTF-8" > /etc/environment
@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
     SHELL
 
     config.vm.provision "up", type: "shell", run: "always", privileged: false, inline: <<-SHELL
-    	PASSWD='vagrant'
+        PASSWD='vagrant'
 
         # install
         if [ ! -f phpBB-3.1.12.tar.bz2 ]; then
@@ -74,6 +74,13 @@ Vagrant.configure("2") do |config|
             cd webroot/auth
             composer install
         fi
+
+        cd /var/www/auth
+        if [ ! -f config/config.php ]; then
+            cp config/config.dist.php config/config.php
+        fi
+        chmod 0777 logs
+        composer install
 
         echo " "
         echo "Forum auth http://localhost:8080"

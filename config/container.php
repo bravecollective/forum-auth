@@ -89,8 +89,10 @@ return [
     },
 
     PhpBB::class => function (ContainerInterface $container) {
-        $cfg_bb_groups = $container->get('settings')['cfg_bb_groups'];
-
-        return new PhpBB($cfg_bb_groups);
+        return new PhpBB(
+            $container->get('settings')['cfg_bb_groups'],
+            $container->get('settings')['cfg_bb_group_default_by_tag'],
+            $container->get('settings')['cfg_bb_group_by_tag']
+        );
     }
 ];

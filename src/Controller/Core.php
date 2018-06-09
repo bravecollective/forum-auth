@@ -167,7 +167,11 @@ class Core
             return false;
         }
 
-        # TODO update groups
+        $this->phpBB->brave_bb_account_update($userId, [
+            'corporation_name' => '', # TODO
+            'alliance_name' => '', # TODO
+            'core_tags' => implode(',', $character->getGroupNames())
+        ]);
 
         return true;
     }
