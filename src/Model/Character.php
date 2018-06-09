@@ -215,4 +215,15 @@ class Character
         }
         return false;
     }
+
+    public function generatePassword($length = 10)
+    {
+        $alphabet = "abcdefghkmnpqrstuvwxyzABCDEFGHKMNPQRSTUVWXYZ23456789";
+        $pass = "";
+        for ($i = 0; $i < $length; $i ++) {
+            $pass = $pass . substr($alphabet, hexdec(bin2hex(random_bytes(1))) % strlen($alphabet), 1);
+        }
+
+        return $pass;
+    }
 }

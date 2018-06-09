@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Brave Collective - {{serviceName}}</title>
-	<link rel="stylesheet" href="/assets/bravecollective/web-ui/css/brave.css">
+    <meta charset="UTF-8">
+    <title>Brave Collective - {{serviceName}}</title>
+    <link rel="stylesheet" href="/assets/bravecollective/web-ui/css/brave.css">
 </head>
 
 <body>
@@ -15,14 +15,14 @@
                     <h1 class="display-4">{{serviceName}}</h1>
                     <hr class="my-4">
                     <p>
-                        Hello {{characterName}}.
+                        Hello {{loginName}}.
                     </p>
                     <p>
                         <a href="/logout" class="btn btn-dark btn-sm">logout</a>
                     </p>
                     <p>
                         Forum:
-                        <a href="https://forums.bravecollective.com" target="_blank">
+                        <a href="https://forums.bravecollective.com" target="_blank" class="text-info">
                             https://forums.bravecollective.com
                         </a>
                     </p>
@@ -43,8 +43,8 @@
                     <div class="card-body bg-dark-4">
                         <div class="row">
                             <div class="col-8">
-                                <img src="https://image.eveonline.com/Character/{{primaryId}}_32.jpg">
-                                {{primaryName}}
+                                <img src="https://image.eveonline.com/Character/{{characterId}}_32.jpg">
+                                {{characterName}}
                             </div>
                             <div class="col-4">
                                 <a href="/core-update" class="btn btn-info btn-sm btn-block"
@@ -75,9 +75,42 @@
                         <h5 class="card-title">FAQ</h5>
                     </div>
                     <div class="card-body bg-dark-4">
-                        <p class="card-text">
-                            ...
-                        </p>
+                        <h5>How does this work?</h5>
+                        <p class="text-black">
+                            By clicking the "Update from Core" button your character
+                            has been created as a forum user.<br>
+                            Click the "Reset Password" button to generate a new
+                            random password, then use the credentials listed on
+                            the left in order to
+                            <a href="https://forums.bravecollective.com/ucp.php?mode=login"
+                                class="text-info" target="_blank">login</a>.
+                            Be aware that you can
+                            <a href="https://forums.bravecollective.com/ucp.php?i=ucp_profile&mode=reg_details"
+                                class="text-info" target="_blank">change</a>
+                            your password in the forum itself or use this
+                            page to generate a new random password anytime.
+                         </p>
+                        <h5>First Steps?</h5>
+                        <p class="text-black">
+                            Once you successfilly logged into the forum, you should setup your
+                            profile. <br>
+                            Adding your email and jabber address to your
+                            <a href="https://forums.bravecollective.com/ucp.php?i=ucp_profile&mode=profile_info"
+                                class="text-info" target="_blank">profile</a>
+                            is recommended as they can be used for
+                            <a href="https://forums.bravecollective.com/ucp.php?i=ucp_notifications&mode=notification_options"
+                                class="text-info" target="_blank">notifications</a>
+                            in case you receive a PM or are quoted in a reply.
+                         </p>
+                        <h5>What about my Alt Characters?</h5>
+                        <p class="text-black">
+                            The user under which you are known on the forum is your
+                            Character as shown on the left.<br>
+                            For each associated character in the
+                            <a href="https://account.bravecollective.com/" class="text-info" target="_blank">Core</a>
+                            app, your character inherits the permissions from that
+                            character (e.g. access to corp forums in case they exist).
+                         </p>
                     </div>
                 </div>
             </div>

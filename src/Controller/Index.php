@@ -45,17 +45,17 @@ class Index
         $html = file_get_contents(ROOT_DIR.'/html/index.html');
         $html = str_replace(
             [
-                '{{characterName}}',
+                '{{loginName}}',
                 '{{serviceName}}',
-                '{{primaryId}}',
-                '{{primaryName}}',
+                '{{characterId}}',
+                '{{characterName}}',
                 '{{username}}',
                 '{{password}}',
             ],[
                 $auth->getCharacterName(),
                 $this->serviceName,
                 $character ? $character->getId() : 1,
-                $character ? $character->getName() : '- please update from Core',
+                $character ? $character->getName() : 'please update from Core',
                 $character ? $character->getUsername() : '',
                 $character ? $character->getPassword() : '',
             ],
