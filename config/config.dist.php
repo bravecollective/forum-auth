@@ -11,7 +11,7 @@ return [
     'SSO_SCOPES' => '',
 
     // App
-    'brave.serviceName' => 'Brave Forum Authentication',
+    'brave.serviceName' => 'Forum Authentication',
 
     // NEUCORE
     'CORE_URL' => 'https://account.bravecollective.com/api',
@@ -19,8 +19,8 @@ return [
     'CORE_APP_TOKEN' => '',
 
     // DB
-    'DB_URL' => ''
+    'DB_URL' => 'mysql://root:vagrant@localhost/forum_auth',
 
     // Slim
-    'displayErrorDetails' => true
+    'displayErrorDetails' => true,
 ];

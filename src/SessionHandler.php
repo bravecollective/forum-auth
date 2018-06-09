@@ -1,5 +1,5 @@
 <?php
-namespace Brave\CoreConnector;
+namespace Brave\ForumAuth;
 
 use Brave\Sso\Basics\SessionHandlerInterface;
 use SlimSession\Helper;

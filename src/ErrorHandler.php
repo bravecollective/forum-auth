@@ -1,5 +1,5 @@
 <?php
-namespace Brave\CoreConnector;
+namespace Brave\ForumAuth;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;

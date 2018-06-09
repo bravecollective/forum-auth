@@ -22,6 +22,7 @@ Vagrant.configure("2") do |config|
         debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $PASSWD"
         apt-get install -y mysql-server
         mysql -e 'CREATE DATABASE IF NOT EXISTS phpbb' -p$PASSWD
+        mysql -e 'CREATE DATABASE IF NOT EXISTS forum_auth' -p$PASSWD
 
         apt-get install -y git apache2 php5 libapache2-mod-php5 php5-curl php5-mysql php5-xsl
 

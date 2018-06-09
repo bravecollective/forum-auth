@@ -1,5 +1,5 @@
 <?php
-namespace Brave\CoreConnector;
+namespace Brave\ForumAuth;
 
 use Psr\Container\ContainerInterface;
 
@@ -38,5 +38,15 @@ class Bootstrap
         ]));
 
         return $app;
+    }
+
+    public function phpBBDir()
+    {
+        return $this->container->get('settings')['cfg_bb_path'];
+    }
+
+    public function dbUrl()
+    {
+        return $this->container->get('settings')['DB_URL'];
     }
 }

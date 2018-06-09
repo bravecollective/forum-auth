@@ -1,35 +1,42 @@
 {
     "name": "bravecollective/core-connector",
+    "type": "project",
     "autoload": {
         "psr-4": {
-            "Brave\\CoreConnector\\": "src"
+            "Brave\\ForumAuth\\": "src"
         }
     },
     "repositories": [
-    {
-        "type": "git",
-        "url": "https://github.com/bravecollective/neucore-api.git"
-    },
-    {
-        "type": "git",
-        "url": "https://github.com/bravecollective/sso-basics.git"
-    },
-    {
-        "type": "git",
-        "url": "https://github.com/bravecollective/web-ui.git"
-    }
+        {
+            "type": "git",
+            "url": "https://github.com/bravecollective/neucore-api.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/bravecollective/sso-basics.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/bravecollective/web-ui.git"
+        }
     ],
     "require": {
-        "frontpack/composer-assets-plugin": "^0.9",
         "bravecollective/neucore-api": "*@dev",
         "bravecollective/sso-basics": "*@dev",
         "bravecollective/web-ui": "*@dev",
-        "vlucas/phpdotenv": "^2.4",
-        "doctrine/dbal": "2.5",
         "bryanjhv/slim-session": "^3.5",
-        "monolog/monolog": "^1.23"
+        "doctrine/dbal": "2.5",
+        "doctrine/orm": "^2.5",
+        "frontpack/composer-assets-plugin": "^0.9",
+        "monolog/monolog": "^1.23",
+        "vlucas/phpdotenv": "^2.4"
     },
     "config": {
         "assets-dir": "web/assets"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "bin/update-db-schema.php"
+        ]
     }
 }
