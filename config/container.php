@@ -3,6 +3,7 @@
 use Brave\ForumAuth\ErrorHandler;
 use Brave\ForumAuth\Model\Character;
 use Brave\ForumAuth\Model\CharacterRepository;
+use Brave\ForumAuth\PhpBB;
 use Brave\ForumAuth\SessionHandler;
 
 use Psr\Container\ContainerInterface;
@@ -47,7 +48,7 @@ return [
 
     LoggerInterface::class => function (ContainerInterface $container) {
         $logger = new \Monolog\Logger('errors');
-        $logger->pushHandler(new \Monolog\Handler\StreamHandler(ROOT_DIR.'/logs/error.log', \Monolog\Logger::DEBUG));
+        $logger->pushHandler(new \Monolog\Handler\StreamHandler(BRAVE_ROOT_DIR.'/logs/error.log', \Monolog\Logger::DEBUG));
 
         return $logger;
     },
@@ -61,7 +62,7 @@ return [
 
     \Doctrine\ORM\EntityManagerInterface::class => function (ContainerInterface $container) {
         // just use dev mode, so this needs not cache
-        $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration([ROOT_DIR . '/src'], true);
+        $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration([BRAVE_ROOT_DIR . '/src'], true);
 
         return \Doctrine\ORM\EntityManager::create(['url' => $container->get('settings')['DB_URL']], $config);
     },
@@ -85,5 +86,11 @@ return [
         $config->setApiKeyPrefix('Authorization', 'Bearer');
 
         return new Brave\NeucoreApi\Api\ApplicationApi(null, $config);
+    },
+
+    PhpBB::class => function (ContainerInterface $container) {
+        $cfg_bb_groups = $container->get('settings')['cfg_bb_groups'];
+
+        return new PhpBB($cfg_bb_groups);
     }
 ];

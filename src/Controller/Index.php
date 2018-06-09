@@ -58,7 +58,7 @@ class Index
         // get character from local database - may not yet exist
         $character = $this->characterRepository->find($auth->getCharacterId());
 
-        $html = file_get_contents(ROOT_DIR.'/html/index.html');
+        $html = file_get_contents(BRAVE_ROOT_DIR.'/html/index.html');
         $html = str_replace(
             [
                 '{{loginName}}',

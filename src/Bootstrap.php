@@ -18,7 +18,7 @@ class Bootstrap
      */
     public function __construct()
     {
-        $container = new \Slim\Container(require_once(ROOT_DIR . '/config/container.php'));
+        $container = new \Slim\Container(require_once(BRAVE_ROOT_DIR . '/config/container.php'));
         $this->container = $container;
 
     }
@@ -28,7 +28,7 @@ class Bootstrap
      */
     public function enableRoutes()
     {
-        $routesConfigurator = require_once(ROOT_DIR . '/config/routes.php');
+        $routesConfigurator = require_once(BRAVE_ROOT_DIR . '/config/routes.php');
         $app = $routesConfigurator($this->container);
 
         $app->add(new \Slim\Middleware\Session([
@@ -36,6 +36,8 @@ class Bootstrap
             'autorefresh' => true,
             'lifetime' => '1 hour'
         ]));
+
+        $app->add(new \RKA\Middleware\IpAddress());
 
         return $app;
     }

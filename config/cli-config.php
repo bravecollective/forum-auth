@@ -14,11 +14,11 @@ use Symfony\Component\Console\Helper\HelperSet;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-define('ROOT_DIR', realpath(__DIR__ . '/../'));
+define('BRAVE_ROOT_DIR', realpath(__DIR__ . '/../'));
 $bootstrap = new Bootstrap();
 $bootstrap->enableRoutes(); // reads configuration
 
-$config = Setup::createAnnotationMetadataConfiguration([ROOT_DIR . '/src/Model'], true);
+$config = Setup::createAnnotationMetadataConfiguration([BRAVE_ROOT_DIR . '/src/Model'], true);
 $em = EntityManager::create(['url' => $bootstrap->dbUrl()], $config);
 
 /* @var $helpers HelperSet */

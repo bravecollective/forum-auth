@@ -3,6 +3,8 @@ namespace Brave\ForumAuth\Controller;
 
 use Brave\ForumAuth\Model\Character;
 use Brave\ForumAuth\Model\CharacterRepository;
+use Brave\ForumAuth\Model\Group;
+use Brave\ForumAuth\PhpBB;
 use Brave\ForumAuth\SessionHandler;
 use Brave\NeucoreApi\Api\ApplicationApi;
 use Brave\Sso\Basics\EveAuthentication;
@@ -11,7 +13,6 @@ use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Slim\Http\Response;
-use Brave\ForumAuth\Model\Group;
 
 class Core
 {
@@ -40,6 +41,11 @@ class Core
      */
     private $entityManager;
 
+    /**
+     * @var PhpBB
+     */
+    private $phpBB;
+
     public function __construct(ContainerInterface $container)
     {
         $this->apiInstance = $container->get(ApplicationApi::class);
@@ -47,6 +53,7 @@ class Core
         $this->logger = $container->get(LoggerInterface::class);
         $this->characterRepository = $container->get(CharacterRepository::class);
         $this->entityManager = $container->get(EntityManagerInterface::class);
+        $this->phpBB = $container->get(PhpBB::class);
     }
 
     public function update(ServerRequestInterface $request, Response $response)
@@ -73,6 +80,11 @@ class Core
             $this->entityManager->flush();
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), ['exception' => $e]);
+            return $response->withRedirect('/?core-success=0');
+        }
+
+        // create/update forum user
+        if (! $this->updateCreateForumUser($character, $request)) {
             return $response->withRedirect('/?core-success=0');
         }
 
@@ -136,5 +148,27 @@ class Core
             $addGroup->setCharacter($character);
             $this->entityManager->persist($addGroup);
         }
+    }
+
+    private function updateCreateForumUser(Character $character, ServerRequestInterface $request)
+    {
+        $userId = $this->phpBB->brave_bb_user_name_to_id($character->getUsername());
+
+        if ($userId === false) {
+            $userId = $this->phpBB->brave_bb_account_create(
+                $character->getId(),
+                $character->getUsername(),
+                $character->getPassword(),
+                $request->getAttribute('ip_address')
+            );
+        }
+
+        if ($userId === false) {
+            return false;
+        }
+
+        # TODO update groups
+
+        return true;
     }
 }

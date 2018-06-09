@@ -21,6 +21,7 @@
         }
     ],
     "require": {
+        "akrabat/ip-address-middleware": "^0.6.0",
         "bravecollective/neucore-api": "*@dev",
         "bravecollective/sso-basics": "*@dev",
         "bravecollective/web-ui": "*@dev",
