@@ -34,13 +34,12 @@ Vagrant.configure("2") do |config|
         apt-get install -y phpmyadmin
 
         echo "Alias /phpbb /var/www/phpbb"              > /etc/apache2/sites-available/010-brave.conf
-        echo "Alias /oldauth /var/www/oldauth/webroot" >> /etc/apache2/sites-available/010-brave.conf
         echo "<VirtualHost *:80>"                      >> /etc/apache2/sites-available/010-brave.conf
         echo "    DocumentRoot /var/www/auth/web"      >> /etc/apache2/sites-available/010-brave.conf
         echo "    <Directory /var/www/auth/web/>"      >> /etc/apache2/sites-available/010-brave.conf
         echo "        AllowOverride All"               >> /etc/apache2/sites-available/010-brave.conf
         echo "    </Directory>"                        >> /etc/apache2/sites-available/010-brave.conf
-        echo "</VirtualHost>"
+        echo "</VirtualHost>"                          >> /etc/apache2/sites-available/010-brave.conf
         a2enmod rewrite
         a2ensite 010-brave
         a2dissite 000-default
@@ -67,14 +66,6 @@ Vagrant.configure("2") do |config|
             chmod 0777 /var/www/phpbb/images/avatars/upload
         fi
 
-        if [ ! -d /var/www/oldauth ]; then
-            mkdir /var/www/oldauth
-            cd /var/www/oldauth
-            git clone https://github.com/tkhamez/oldcore-forum-auth.git .
-            cd webroot/auth
-            composer install
-        fi
-
         cd /var/www/auth
         if [ ! -f config/config.php ]; then
             cp config/config.dist.php config/config.php
@@ -85,10 +76,8 @@ Vagrant.configure("2") do |config|
         echo " "
         echo "Forum auth http://localhost:8080"
         echo "phpMyAdmin http://localhost:8080/phpmyadmin (root/$PASSWD)"
-        echo "phpBB http://localhost:8080/phpbb"
-        echo "(install with: DB server: 127.0.0.1, DB name: phpbb, DB username: root, DB password: $PASSWD)"
-        echo "Old forum auth http://localhost:8080/oldauth"
-        echo " "
+        echo "phpBB http://localhost:8080/phpbb (install with: DB server: 127.0.0.1, DB name: phpbb, DB username: root, DB password: $PASSWD)"
+        echo "ifconfig:"
         /sbin/ifconfig eth0 | grep "inet addr"
         echo "SSH user: vagrant/$PASSWD"
         echo "mount on host, e. g.: $ sshfs vagrant@192.168.121.175:/ /mnt/brave-forum-auth"
