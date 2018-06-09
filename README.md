@@ -11,6 +11,7 @@ The phpBB installation also needs two `Custom profile fields` (Single text field
 - `core_corp_name`
 - `core_alli_name`
 
+Install
 - `logs` must be writable by the web server.
 - copy `config/config.dist.php` to `config/config.php` and adjust values.
 - execute `composer install`, this will also create/update the database schema.
