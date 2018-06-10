@@ -30,6 +30,7 @@
         "doctrine/orm": "^2.5",
         "frontpack/composer-assets-plugin": "^0.9",
         "monolog/monolog": "^1.23",
+        "symfony/console": "^3.4",
         "vlucas/phpdotenv": "^2.4"
     },
     "config": {
@@ -37,7 +38,7 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "bin/update-db-schema.php"
+            "bin/console.php db:schema-update"
         ]
     }
 }

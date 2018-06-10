@@ -1,7 +1,9 @@
 <?php
 namespace Brave\ForumAuth;
 
+use Brave\ForumAuth\Command\UpdateDatabaseSchema;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Console\Application;
 
 /**
  *
@@ -40,6 +42,19 @@ class Bootstrap
         $app->add(new \RKA\Middleware\IpAddress());
 
         return $app;
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Application
+     */
+    public function enableCommands()
+    {
+        set_time_limit(0);
+
+        $console = new Application();
+        $console->add(new UpdateDatabaseSchema($this->container));
+
+        return $console;
     }
 
     public function phpBBDir()

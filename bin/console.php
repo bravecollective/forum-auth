@@ -1,6 +1,7 @@
+#!/usr/bin/env php
 <?php
 /**
- * Web app.
+ * Console app.
  *
  * Note: phpBB needs and creates global variables, so better
  * prefix anything else here with "barve";
@@ -18,4 +19,4 @@ $braveBootstrap = new \Brave\ForumAuth\Bootstrap();
 include BRAVE_ROOT_DIR . '/config/phpbb.inc.php';
 
 // run app
-$braveBootstrap->enableRoutes()->run();
+$braveBootstrap->enableCommands()->run();
