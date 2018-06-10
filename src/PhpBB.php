@@ -4,7 +4,7 @@ namespace Brave\ForumAuth;
 /**
  * phpBB integration.
  *
- * Functions are copied from old forum auth (webroot/helper.php) and adjusted 
+ * Functions are copied from old forum auth (webroot/helper.php) and adjusted
  * where needed (https://github.com/bravecollective/oldcore-forum-auth)
  *
  * This needs two custom profile fields (Single text fields):

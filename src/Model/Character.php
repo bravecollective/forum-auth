@@ -50,6 +50,14 @@ class Character
     private $groups;
 
     /**
+     * Last Core update.
+     *
+     * @Column(type="datetime", name="last_update", nullable=true)
+     * @var \DateTime
+     */
+    private $lastUpdate;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -204,16 +212,15 @@ class Character
     /**
      *
      * @param string $groupName
-     * @return boolean
+     * @return Group|null
      */
-    public function removeGroupByName($groupName)
+    public function getGroupByName($groupName)
     {
         foreach ($this->getGroups() as $group) {
             if ($group->getName() === $groupName) {
-                return $this->groups->removeElement($group);
+                return $group;
             }
         }
-        return false;
     }
 
     public function generatePassword($length = 10)
@@ -225,5 +232,49 @@ class Character
         }
 
         return $pass;
+    }
+
+    /**
+     * Set lastUpdate.
+     *
+     * @param \DateTime $update
+     *
+     * @return Character
+     */
+    public function setLastUpdate($lastUpdate)
+    {
+        $this->lastUpdate = clone $lastUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Get lastUpdate.
+     *
+     * @return \DateTime|null
+     */
+    public function getLastUpdate()
+    {
+        return $this->lastUpdate;
+    }
+
+    /**
+     * TODO implement this.
+     *
+     * @return string
+     */
+    public function getCorporationName()
+    {
+        return '';
+    }
+
+    /**
+     * TODO implement this.
+     *
+     * @return string|null
+     */
+    public function getAllianceName()
+    {
+        return null;
     }
 }

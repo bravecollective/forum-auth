@@ -1,6 +1,7 @@
 <?php
 namespace Brave\ForumAuth;
 
+use Brave\ForumAuth\Command\SyncGroups;
 use Brave\ForumAuth\Command\UpdateDatabaseSchema;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
@@ -53,6 +54,7 @@ class Bootstrap
 
         $console = new Application();
         $console->add(new UpdateDatabaseSchema($this->container));
+        $console->add(new SyncGroups($this->container));
 
         return $console;
     }

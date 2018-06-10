@@ -5,6 +5,7 @@ use Brave\ForumAuth\Model\Character;
 use Brave\ForumAuth\Model\CharacterRepository;
 use Brave\ForumAuth\PhpBB;
 use Brave\ForumAuth\SessionHandler;
+use Brave\ForumAuth\SyncService;
 
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -48,7 +49,9 @@ return [
 
     LoggerInterface::class => function (ContainerInterface $container) {
         $logger = new \Monolog\Logger('errors');
-        $logger->pushHandler(new \Monolog\Handler\StreamHandler(BRAVE_ROOT_DIR.'/logs/error.log', \Monolog\Logger::DEBUG));
+        $fileName = PHP_SAPI === 'cli' ? 'error-cli.log' : 'error.log';
+        $handler = new \Monolog\Handler\StreamHandler(BRAVE_ROOT_DIR.'/logs/'.$fileName, \Monolog\Logger::DEBUG);
+        $logger->pushHandler($handler);
 
         return $logger;
     },
@@ -93,6 +96,16 @@ return [
             $container->get('settings')['cfg_bb_groups'],
             $container->get('settings')['cfg_bb_group_default_by_tag'],
             $container->get('settings')['cfg_bb_group_by_tag']
+        );
+    },
+
+    SyncService::class => function (ContainerInterface $container) {
+        return new SyncService(
+            $container->get(LoggerInterface::class),
+            $container->get(\Doctrine\ORM\EntityManagerInterface::class),
+            $container->get(CharacterRepository::class),
+            $container->get(\Brave\NeucoreApi\Api\ApplicationApi::class),
+            $container->get(PhpBB::class)
         );
     }
 ];
