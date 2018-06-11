@@ -99,7 +99,6 @@ class Core
             $character = new Character();
             $character->setId($auth->getCharacterId());
             $character->setUsername($auth->getCharacterName()); // never change once set
-            $character->setPassword($character->generatePassword());
             $this->entityManager->persist($character);
         }
         $character->setName($auth->getCharacterName()); // EVE character names can change

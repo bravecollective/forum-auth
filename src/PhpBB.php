@@ -106,13 +106,12 @@ class PhpBB
         $this->brave_bb_account_update($user_name);
     }*/
 
-    public function brave_bb_account_create($character_id, $user_name, $password, $ipAddress)
+    public function brave_bb_account_create($character_id, $user_name, $ipAddress)
     {
         $passwords_manager = $this->phpbb_container->get('passwords.manager');
 
         $user = array(
             'username' => $user_name,
-            'user_password' => $passwords_manager->hash($password),
             'user_email' => '',
             'group_id' => $this->cfg_bb_groups['register'],
             'user_type' => USER_NORMAL,

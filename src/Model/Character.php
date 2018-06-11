@@ -35,15 +35,6 @@ class Character
     private $username;
 
     /**
-     * Forum password.
-     *
-     * @Column(type="string", length=255, nullable=true)
-     * @var string
-     */
-    private $password;
-
-    /**
-     *
      * @OneToMany(targetEntity="Group", mappedBy="character")
      * @var \Doctrine\Common\Collections\Collection
      */
@@ -138,30 +129,6 @@ class Character
     }
 
     /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return Character
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * Add group
      *
      * @param Group $group
@@ -221,17 +188,6 @@ class Character
                 return $group;
             }
         }
-    }
-
-    public function generatePassword($length = 10)
-    {
-        $alphabet = "abcdefghkmnpqrstuvwxyzABCDEFGHKMNPQRSTUVWXYZ23456789";
-        $pass = "";
-        for ($i = 0; $i < $length; $i ++) {
-            $pass = $pass . substr($alphabet, hexdec(bin2hex(random_bytes(1))) % strlen($alphabet), 1);
-        }
-
-        return $pass;
     }
 
     /**

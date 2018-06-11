@@ -109,7 +109,7 @@ class SyncService
      * Updates a forum user, creates it if necessary.
      *
      * @param Character $character
-     * @param string $ipAddress
+     * @param string $ipAddress only used for new accounts
      * @return boolean
      */
     public function updateCreateForumUser(Character $character, $ipAddress = null)
@@ -120,7 +120,6 @@ class SyncService
             $userId = $this->phpBB->brave_bb_account_create(
                 $character->getId(),
                 $character->getUsername(),
-                $character->getPassword(),
                 $ipAddress
             );
         }

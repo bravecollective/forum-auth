@@ -70,17 +70,19 @@ class Index
                 '{{alertType}}',
                 '{{alertText}}',
             ],[
-                $auth->getCharacterName(),
-                $this->serviceName,
+                htmlspecialchars($auth->getCharacterName()),
+                htmlspecialchars($this->serviceName),
                 $character ? $character->getId() : 1,
-                $character ? $character->getName() : 'please update from Core',
-                $character ? $character->getUsername() : '',
-                $character ? $character->getPassword() : '',
+                $character ? htmlspecialchars($character->getName()) : 'please update from Core',
+                $character ? htmlspecialchars($character->getUsername()) : '',
+                htmlspecialchars($this->sessionHandler->get('newpass', '<Reset Password>')),
                 $alertType,
-                $alertText,
+                htmlspecialchars($alertText),
             ],
             $html
         );
+
+        $this->sessionHandler->delete('newpass');
 
         $response->write($html);
     }

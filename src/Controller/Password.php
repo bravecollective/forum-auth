@@ -61,7 +61,6 @@ class Password
         if ($character === null) {
             return $response->withRedirect('/?pw-success=0');
         }
-        $character->setPassword($character->generatePassword());
 
         // save
         try {
@@ -71,22 +70,35 @@ class Password
             return $response->withRedirect('/?pw-success=0');
         }
 
-        if (! $this->updateForumUser($character)) {
+        $password = $this->generatePassword();
+        if (! $this->updateForumUser($character, $password)) {
             return $response->withRedirect('/?pw-success=0');
         }
-
+        $this->sessionHandler->set('newpass', $password);
+        
         return $response->withRedirect('/?pw-success=1');
     }
 
-    private function updateForumUser(Character $character)
+    private function updateForumUser(Character $character, $password)
     {
         $userId = $this->phpBB->brave_bb_user_name_to_id($character->getUsername());
         if ($userId === false) {
             return false;
         }
 
-        $this->phpBB->brave_bb_account_password($userId, $character->getPassword());
+        $this->phpBB->brave_bb_account_password($userId, $password);
 
         return true;
+    }
+
+    private function generatePassword($length = 10)
+    {
+        $alphabet = "abcdefghkmnpqrstuvwxyzABCDEFGHKMNPQRSTUVWXYZ23456789";
+        $pass = "";
+        for ($i = 0; $i < $length; $i ++) {
+            $pass = $pass . substr($alphabet, hexdec(bin2hex(random_bytes(1))) % strlen($alphabet), 1);
+        }
+
+        return $pass;
     }
 }
