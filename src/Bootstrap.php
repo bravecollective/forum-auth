@@ -21,9 +21,11 @@ class Bootstrap
      */
     public function __construct()
     {
+        date_default_timezone_set('UTC');
+        ini_set('default_charset', 'UTF-8');
+
         $container = new \Slim\Container(require_once(BRAVE_ROOT_DIR . '/config/container.php'));
         $this->container = $container;
-
     }
 
     /**

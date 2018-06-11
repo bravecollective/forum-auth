@@ -67,7 +67,10 @@ return [
         // just use dev mode, so this needs not cache
         $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration([BRAVE_ROOT_DIR . '/src'], true);
 
-        return \Doctrine\ORM\EntityManager::create(['url' => $container->get('settings')['DB_URL']], $config);
+        return \Doctrine\ORM\EntityManager::create([
+            'url' => $container->get('settings')['DB_URL'],
+            'driverOptions' => [\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
+        ], $config);
     },
 
     CharacterRepository::class => function (ContainerInterface $container) {
