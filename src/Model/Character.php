@@ -49,6 +49,18 @@ class Character
     private $lastUpdate;
 
     /**
+     * @Column(type="string", name="corporation_name", length=255, nullable=true)
+     * @var string
+     */
+    private $corporationName;
+
+    /**
+     * @Column(type="string", name="alliance_name", length=255, nullable=true)
+     * @var string
+     */
+    private $allianceName;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -215,22 +227,50 @@ class Character
     }
 
     /**
-     * TODO implement this.
+     * Set corporationName
+     *
+     * @param string $corporationName
+     *
+     * @return Character
+     */
+    public function setCorporationName($corporationName)
+    {
+        $this->corporationName = $corporationName;
+
+        return $this;
+    }
+
+    /**
+     * Get corporationName
      *
      * @return string
      */
     public function getCorporationName()
     {
-        return '';
+        return $this->corporationName;
     }
 
     /**
-     * TODO implement this.
+     * Set allianceName
      *
-     * @return string|null
+     * @param string $allianceName
+     *
+     * @return Character
+     */
+    public function setAllianceName($allianceName)
+    {
+        $this->allianceName = $allianceName;
+
+        return $this;
+    }
+
+    /**
+     * Get allianceName
+     *
+     * @return string
      */
     public function getAllianceName()
     {
-        return null;
+        return $this->allianceName;
     }
 }

@@ -68,6 +68,7 @@ class SyncGroups extends Command
             usleep($sleep * 1000);
 
             $character = $this->characterRepository->find($charId);
+            $this->syncService->fetchUpdateCorpAlliance($character);
             $groupNames = $this->syncService->getCoreGroups($character->getId());
             $this->syncService->addRemoveGroups($character, $groupNames);
 

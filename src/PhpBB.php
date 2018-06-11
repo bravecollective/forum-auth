@@ -108,8 +108,6 @@ class PhpBB
 
     public function brave_bb_account_create($character_id, $user_name, $ipAddress)
     {
-        $passwords_manager = $this->phpbb_container->get('passwords.manager');
-
         $user = array(
             'username' => $user_name,
             'user_email' => '',

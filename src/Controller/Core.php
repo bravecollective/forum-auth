@@ -66,8 +66,9 @@ class Core
             return $response->withRedirect('/?core-success=0');
         }
 
-        // update or create local character
+        // create and/or update local character
         $character = $this->updateCreateCharacter($auth);
+        $this->syncService->fetchUpdateCorpAlliance($character);
 
         // add and remove groups from local character
         $this->syncService->addRemoveGroups($character, $groupNames);

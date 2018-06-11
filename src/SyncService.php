@@ -72,6 +72,37 @@ class SyncService
         return $groupNames;
     }
 
+    public function fetchUpdateCorpAlliance(Character $character)
+    {
+        $esiHost = 'https://esi.evetech.net';
+        $dataSource = 'datasource=tranquility';
+
+        // get corp and alli IDs
+        $char = file_get_contents($esiHost.'/v4/characters/'.$character->getId().'/?'.$dataSource);
+        $charJson = json_decode($char, true); // $char may be false from file_get_contents()
+        if ($charJson === null || $charJson === false) {
+            return;
+        }
+
+        // corp name
+        $corp = file_get_contents($esiHost.'/v4/corporations/'.$charJson['corporation_id'].'/?'.$dataSource);
+        $corpJson = json_decode($corp); // $corp may be false from file_get_contents()
+        if ($corpJson === null || $corpJson === false) {
+            return;
+        }
+        $character->setCorporationName($corpJson->name);
+
+        // alli name
+        if (isset($charJson['alliance_id'])) {
+            $alli = file_get_contents($esiHost.'/v3/alliances/'.$charJson['alliance_id'].'/?'.$dataSource);
+            $alliJson = json_decode($alli); // $alli may be false from file_get_contents()
+            if ($alliJson === null || $alliJson === false) {
+                return;
+            }
+        }
+        $character->setAllianceName($alliJson->name);
+    }
+
     /**
      * Add and/or remove groups to/from character.
      *
