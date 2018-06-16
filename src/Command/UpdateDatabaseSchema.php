@@ -39,7 +39,8 @@ class UpdateDatabaseSchema extends Command
         ];
 
         $tool = new SchemaTool($this->entityManager);
-        $tool->updateSchema($classes);
+        // using safe mode to avoid deleting tables.
+        $tool->updateSchema($classes, true);
 
         $output->writeln('Schema updated.');
     }
