@@ -99,8 +99,10 @@ class SyncService
             if ($alliJson === null || $alliJson === false) {
                 return;
             }
+            $character->setAllianceName($alliJson->name);
+        } else {
+            $character->setAllianceName('');
         }
-        $character->setAllianceName($alliJson->name);
     }
 
     /**
