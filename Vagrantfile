@@ -1,11 +1,15 @@
 
 Vagrant.configure("2") do |config|
-    config.vm.box = "generic/debian8"
+    config.vm.provider :libvirt do |libvirt|
+        libvirt.cpus = 1
+        libvirt.memory = 1024
+    end
 
-    config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
-    config.vm.network :private_network, type: "dhcp"
+    config.vm.box = "generic/ubuntu1804"
+    config.vm.hostname = "brave-forum-auth"
 
-    config.vm.synced_folder "./", "/var/www/auth", type: "rsync"
+    config.vm.synced_folder "./", "/var/www/auth", type: "rsync",
+        rsync__exclude: [".settings/", ".buildpath", ".project"]
 
     config.ssh.username = 'vagrant'
     config.ssh.password = 'vagrant'
@@ -24,7 +28,7 @@ Vagrant.configure("2") do |config|
         mysql -e 'CREATE DATABASE IF NOT EXISTS phpbb' -p$PASSWD
         mysql -e 'CREATE DATABASE IF NOT EXISTS forum_auth' -p$PASSWD
 
-        apt-get install -y git apache2 php5 libapache2-mod-php5 php5-curl php5-mysql php5-xsl
+        apt-get install -y git apache2 php-cli php-fpm php-curl php-mysql php-xsl composer
 
         debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
         debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $PASSWD"
@@ -40,24 +44,22 @@ Vagrant.configure("2") do |config|
         echo "        AllowOverride All"               >> /etc/apache2/sites-available/010-brave.conf
         echo "    </Directory>"                        >> /etc/apache2/sites-available/010-brave.conf
         echo "</VirtualHost>"                          >> /etc/apache2/sites-available/010-brave.conf
-        a2enmod rewrite
+        a2enmod rewrite proxy_fcgi setenvif
         a2ensite 010-brave
         a2dissite 000-default
+        a2enconf php7.2-fpm
         service apache2 reload
 
         chown vagrant:vagrant /var/www
-
-        php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');"
-        php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
     SHELL
 
     config.vm.provision "up", type: "shell", run: "always", privileged: false, inline: <<-SHELL
         PASSWD='vagrant'
 
         # install
-        if [ ! -f phpBB-3.1.12.tar.bz2 ]; then
-            wget https://www.phpbb.com/files/release/phpBB-3.1.12.tar.bz2
-            tar jxf phpBB-3.1.12.tar.bz2
+        if [ ! -f phpBB-3.2.2.tar.bz2 ]; then
+            wget https://www.phpbb.com/files/release/phpBB-3.2.2.tar.bz2
+            tar jxf phpBB-3.2.2.tar.bz2
             mv phpBB3 /var/www/phpbb
             chmod 0666 /var/www/phpbb/config.php
             chmod 0777 /var/www/phpbb/store
@@ -74,13 +76,16 @@ Vagrant.configure("2") do |config|
         composer install
 
         echo " "
-        echo "Forum auth http://localhost:8080"
-        echo "phpMyAdmin http://localhost:8080/phpmyadmin (root/$PASSWD)"
-        echo "phpBB http://localhost:8080/phpbb (install with: DB server: 127.0.0.1, DB name: phpbb, DB username: root, DB password: $PASSWD)"
-        echo "ifconfig:"
-        /sbin/ifconfig eth0 | grep "inet addr"
+        echo "URLs (change IP as needed):"
+        echo "Forum auth http://192.168.121.99"
+        echo "phpMyAdmin http://192.168.121.99/phpmyadmin (root/$PASSWD)"
+        echo "phpBB http://192.168.121.99/phpbb"
+        echo "(install with Database ...: server: 127.0.0.1, username: root, password: $PASSWD, name: phpbb)"
         echo "SSH user: vagrant/$PASSWD"
-        echo "mount on host, e. g.: $ sshfs vagrant@192.168.121.175:/ /mnt/brave-forum-auth"
+        echo "mount: $ sshfs vagrant@192.168.121.99:/ /mnt/brave-forum-auth"
+        echo "unmount: fusermount -u /mnt/brave-forum-auth"
+        echo "-- ifconfig eth0 | grep inet :"
+        /sbin/ifconfig eth0 | grep "inet "
         echo " "
     SHELL
 end
