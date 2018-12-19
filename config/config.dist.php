@@ -7,7 +7,7 @@ return [
     'SSO_REDIRECTURI' => 'http://localhost:8080/auth',
     'SSO_URL_AUTHORIZE' => 'https://login.eveonline.com/oauth/authorize',
     'SSO_URL_ACCESSTOKEN' => 'https://login.eveonline.com/oauth/token',
-    'SSO_URL_RESOURCEOWNERDETAILS' => 'https://esi.tech.ccp.is/verify/',
+    'SSO_URL_RESOURCEOWNERDETAILS' => 'https://esi.evetech.net/verify/',
     'SSO_SCOPES' => '',
 
     // App
