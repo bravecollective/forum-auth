@@ -246,6 +246,6 @@ class PhpBB
 
         $this->user->reset_login_keys($user_id);
 
-        add_log('user', $user_id, 'LOG_USER_NEW_PASSWORD', 'Reset password throuh CORE');
+        add_log('user', $user_id, 'LOG_USER_NEW_PASSWORD', 'Reset password through CORE');
     }
 }

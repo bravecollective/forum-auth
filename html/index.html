@@ -47,12 +47,12 @@
                                 {{characterName}}
                             </div>
                             <div class="col-4">
-                               	<a href="/core-update" style="text-decoration: none">
-	                                <button type="button" class="btn btn-info btn-sm btn-block"
-	                                	style="font-size: .7em;"
-	                                	onclick="this.disabled = true">Update from Core
-	                                </button>
-                               	</a>
+                                   <a href="/core-update" style="text-decoration: none">
+                                    <button type="button" class="btn btn-info btn-sm btn-block"
+                                        style="font-size: .7em;"
+                                        onclick="this.disabled = true">Update from Core
+                                    </button>
+                                   </a>
                             </div>
                         </div>
                         <hr class="my-2">
@@ -63,7 +63,7 @@
                             </div>
                             <div class="col-4">
                                 {{username}}<br>
-                                {{password}}
+                                <span>{{password}}</span>
                             </div>
                             <div class="col-4">
                                 <a href="/pw-reset" class="btn btn-info btn-sm btn-block"
@@ -73,9 +73,9 @@
                     </div>
                 </div>
 
-		        <div class="mt-5 alert alert-{{alertType}}">
-		            {{alertText}}
-		        </div>
+                <div class="mt-5 alert alert-{{alertType}}">
+                    {{alertText}}
+                </div>
 
             </div>
             <div class="col-md">

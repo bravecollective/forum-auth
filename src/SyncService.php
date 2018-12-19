@@ -78,14 +78,14 @@ class SyncService
         $dataSource = 'datasource=tranquility';
 
         // get corp and alli IDs
-        $char = file_get_contents($esiHost.'/v4/characters/'.$character->getId().'/?'.$dataSource);
+        $char = file_get_contents($esiHost.'/latest/characters/'.$character->getId().'/?'.$dataSource);
         $charJson = json_decode($char, true); // $char may be false from file_get_contents()
         if ($charJson === null || $charJson === false) {
             return;
         }
 
         // corp name
-        $corp = file_get_contents($esiHost.'/v4/corporations/'.$charJson['corporation_id'].'/?'.$dataSource);
+        $corp = file_get_contents($esiHost.'/latest/corporations/'.$charJson['corporation_id'].'/?'.$dataSource);
         $corpJson = json_decode($corp); // $corp may be false from file_get_contents()
         if ($corpJson === null || $corpJson === false) {
             return;
@@ -94,7 +94,7 @@ class SyncService
 
         // alli name
         if (isset($charJson['alliance_id'])) {
-            $alli = file_get_contents($esiHost.'/v3/alliances/'.$charJson['alliance_id'].'/?'.$dataSource);
+            $alli = file_get_contents($esiHost.'/latest/alliances/'.$charJson['alliance_id'].'/?'.$dataSource);
             $alliJson = json_decode($alli); // $alli may be false from file_get_contents()
             if ($alliJson === null || $alliJson === false) {
                 return;

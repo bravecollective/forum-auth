@@ -1,20 +1,28 @@
 # Brave Forum Authentication
 
-## Install
+## Install phpBB
 
 This *requires* a phpBB installation.
 
-If you use Vagrant, install phpBB at `http://localhost:8080/phpbb/install/index.php`.
-If you skip this step there will be a redirection error when trying to access `http://localhost:8080`
+If you use the Vagrant installation you must first install phpBB at `http://[IP]/phpbb/install`.
+If you skip this step there will be a redirection error when trying to access the app.
 
-The phpBB installation also needs two `Custom profile fields` (Single text fields):
+Don't forget to delete the install directory after this, or the forum will not be accessible.
+
+The phpBB installation also needs two Custom profile fields `(Admin -> Users and Groups -> Custom profile fields)`, type: Single text fields:
 - `core_corp_name`
 - `core_alli_name`
+
+## Install auth app
 
 Install
 - `logs` must be writable by the web server.
 - copy `config/config.dist.php` to `config/config.php` and adjust values.
 - execute `composer install`, this will also create/update the database schema.
+
+I you use a fresh phpBB installation you must create groups if you want to test anything.
+Go to `Admin -> General -> Manage groups` and add the first group with the name `brave`, it
+should get the ID 8. See `config/config.php` `cfg_bb_groups` array for all groups.
 
 ## Migration
 
@@ -31,3 +39,4 @@ SELECT character_id, character_name, character_name FROM old_forum_auth.auth_cor
 Now run the sync job:
 
 `bin/console.php groups:sync`
+

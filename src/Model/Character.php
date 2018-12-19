@@ -3,7 +3,7 @@ namespace Brave\ForumAuth\Model;
 
 /**
  *
- * @Entity(repositoryClass="Brave\ForumAuth\CharacterRepository")
+ * @Entity(repositoryClass="Brave\ForumAuth\Model\CharacterRepository")
  * @Table(name="characters")
  */
 class Character
