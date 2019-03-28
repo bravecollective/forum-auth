@@ -1,6 +1,7 @@
 {
     "name": "bravecollective/forum-auth",
     "type": "project",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Brave\\ForumAuth\\": "src"
