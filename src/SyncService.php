@@ -135,7 +135,9 @@ class SyncService
             $this->entityManager->persist($addGroup);
         }
 
-        $character->setLastUpdate(new \DateTime());
+        try {
+            $character->setLastUpdate(new \DateTime());
+        } catch(\Exception $e) {}
     }
 
     /**

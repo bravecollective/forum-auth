@@ -4,7 +4,7 @@
 
 This *requires* a phpBB installation.
 
-If you use the Vagrant installation you must first install phpBB at `http://[IP]/phpbb/install`.
+If you use the Vagrant installation you must first install phpBB at `http://[IP]/phpbb/install/app.php`.
 If you skip this step there will be a redirection error when trying to access the app.
 
 Don't forget to delete the install directory after this, or the forum will not be accessible.
@@ -13,16 +13,27 @@ The phpBB installation also needs two Custom profile fields `(Admin -> Users and
 - `core_corp_name`
 - `core_alli_name`
 
-## Install auth app
-
-Install
-- `logs` must be writable by the web server.
-- copy `config/config.dist.php` to `config/config.php` and adjust values.
-- execute `composer install`, this will also create/update the database schema.
-
 I you use a fresh phpBB installation you must create groups if you want to test anything.
 Go to `Admin -> General -> Manage groups` and add the first group with the name `brave`, it
 should get the ID 8. See `config/config.php` `cfg_bb_groups` array for all groups.
+
+## Install auth app
+
+ ==============================
+ 
+When updating and if there is still a table named `groups` you need to rename that manually first
+(groups is a reserved keyword in MySQL 8):
+```
+RENAME TABLE `groups` TO `character_groups`;
+```
+
+ ==============================
+ 
+Install
+- `logs` must be writable by the web server.
+- copy `config/config.dist.php` to `config/config.php` and adjust values.
+- execute `composer install`
+- execute `bin/console.php db:schema-update`
 
 ## Migration
 

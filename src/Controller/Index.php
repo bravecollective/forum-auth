@@ -84,6 +84,6 @@ class Index
 
         $this->sessionHandler->delete('newpass');
 
-        $response->write($html);
+        return $response->write($html);
     }
 }

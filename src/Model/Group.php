@@ -4,7 +4,7 @@ namespace Brave\ForumAuth\Model;
 /**
  *
  * @Entity
- * @Table(name="groups")
+ * @Table(name="character_groups")
  */
 class Group
 {

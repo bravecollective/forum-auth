@@ -6,6 +6,7 @@ use Brave\Sso\Basics\AuthenticationController;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 class Authentication extends AuthenticationController
 {
@@ -14,18 +15,26 @@ class Authentication extends AuthenticationController
      */
     private $sessionHandler;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
 
         $this->sessionHandler = $container->get(SessionHandler::class);
+        $this->logger = $container->get(LoggerInterface::class);
     }
 
-    public function auth(ServerRequestInterface $request, ResponseInterface $response, $arguments)
+    public function auth(ServerRequestInterface $request, ResponseInterface $response)
     {
         try {
-            parent::auth($request, $response, $arguments);
-        } catch (\Exception $e) {}
+            parent::auth($request, $response);
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
 
         return $response->withRedirect('/');
     }

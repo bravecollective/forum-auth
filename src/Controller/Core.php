@@ -91,7 +91,7 @@ class Core
 
     /**
      * @param EveAuthentication $auth
-     * @return \Brave\ForumAuth\Model\Character
+     * @return Character
      */
     private function updateCreateCharacter(EveAuthentication $auth)
     {
