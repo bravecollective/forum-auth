@@ -34,6 +34,7 @@ Install
 - copy `config/config.dist.php` to `config/config.php` and adjust values.
 - execute `composer install`
 - execute `bin/console.php db:schema-update`
+- add cron job for: `bin/console.php groups:sync`
 
 ## Migration
 

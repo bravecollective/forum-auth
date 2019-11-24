@@ -58,9 +58,12 @@ class SyncService
     public function getCoreGroups($characterId)
     {
         try {
-            $groups = $this->apiInstance->groupsV1($characterId);
+            $groups = $this->apiInstance->groupsV2($characterId);
         } catch (\Exception $e) {
-            $this->logger->error($e->getMessage(), ['exception' => $e]);
+            // Don't log "404 Character not found." error from Core.
+            if ($e->getCode() !== 404 || strpos($e->getMessage(), 'Character not found.') === false) {
+                $this->logger->error($e->getMessage(), ['exception' => $e]);
+            }
             return [];
         }
 
