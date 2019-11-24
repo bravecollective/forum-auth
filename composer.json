@@ -37,6 +37,10 @@
         "vlucas/phpdotenv": "^2.4"
     },
     "config": {
-        "assets-dir": "web/assets"
+        "assets-dir": "web/assets",
+        "platform": {
+            "php": "7.0.8"
+        },
+        "sort-packages": true
     }
 }
