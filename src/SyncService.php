@@ -53,7 +53,7 @@ class SyncService
     /**
      *
      * @param int $characterId
-     * @return string[]
+     * @return string[]|null
      */
     public function getCoreGroups($characterId)
     {
@@ -64,7 +64,7 @@ class SyncService
             if ($e->getCode() !== 404 || strpos($e->getMessage(), 'Character not found.') === false) {
                 $this->logger->error($e->getMessage(), ['exception' => $e]);
             }
-            return [];
+            return null;
         }
 
         $groupNames = [];

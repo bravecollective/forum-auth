@@ -70,6 +70,9 @@ class SyncGroups extends Command
             $character = $this->characterRepository->find($charId);
             $this->syncService->fetchUpdateCorpAlliance($character);
             $groupNames = $this->syncService->getCoreGroups($character->getId());
+            if ($groupNames === null) {
+                continue; // request error
+            }
             $this->syncService->addRemoveGroups($character, $groupNames);
 
             try {

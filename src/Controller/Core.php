@@ -61,8 +61,7 @@ class Core
         // get Core groups
         $groupNames = $this->syncService->getCoreGroups($characterId);
 
-        // check if there are any groups at all: no Core groups = no forum account
-        if (count($groupNames) === 0) {
+        if ($groupNames === null) {
             return $response->withRedirect('/?core-success=0');
         }
 
