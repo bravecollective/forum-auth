@@ -63,8 +63,9 @@ class SyncService
             // Don't log "404 Character not found." error from Core.
             if ($e->getCode() !== 404 || strpos($e->getMessage(), 'Character not found.') === false) {
                 $this->logger->error($e->getMessage(), ['exception' => $e]);
+                return null; // other request error, return null
             }
-            return null;
+            return []; // return array with no groups
         }
 
         $groupNames = [];
