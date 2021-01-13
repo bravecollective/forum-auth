@@ -1,4 +1,6 @@
 <?php
+header('Location: /index.html');
+die();
 /**
  * Web app.
  *
