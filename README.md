@@ -1,5 +1,7 @@
 # Brave Forum Authentication
 
+Replaced with https://github.com/bravecollective/neucore-plugin-forum.
+
 ## Install phpBB
 
 This *requires* a phpBB installation.
